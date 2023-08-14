@@ -124,18 +124,18 @@ Additionally, when the first command is sent, the Fade Time is set to zero.
 `bool Pac64SetLEDIntensities(int id, byte *data);`
 
 - Sets the LED intensities on the device specified by id
-- Data is an array of byte data (60 bytes for Nano-LED, 64 bytes for PacLED64 and 96 bytes for I-Pac Ultimate I/O)
+- `data` is an array of byte data (60 bytes for Nano-LED, 64 bytes for PacLED64 and 96 bytes for I-Pac Ultimate I/O)
 - Byte values are from 0 to 255 (0 being off and 255 being full intensity)
 
-**NOTE:** This is a long command and requires a delay of 20ms before sending any further command. This command should only be used when more than half the LEDs need to be changed. Do not use for setting a small number of LEDs, use _SetLEDIntensity_ for this instead.
+**NOTE:** This is a long command and requires a delay of 20ms before sending any further command. This command should only be used when more than half the LEDs need to be changed. Do not use for setting a small number of LEDs, use `SetLEDIntensity` for this instead.
 
 `bool Pac64SetLEDIntensity(int id, int port, byte intensity);`
 
 - Sets an LED's intensity on the device specified by id
-- Port is the LED number
-- Intensity is a value from 0 to 255 (0 being off and 255 being full intensity)
+- `port` is the LED number
+- `intensity` is a value from 0 to 255 (0 being off and 255 being full intensity)
 
-**NOTE:** In many applications this is the only command required, with the possible addition of one initial "_SetLEDFadeTime_". The other commands are mainly provided for compact script sizes.
+**NOTE:** In many applications this is the only command required, with the possible addition of one initial `SetLEDFadeTime`. The other commands are mainly provided for compact script sizes.
 
 `bool Pac64SetLEDStates(int id, int group, byte data);`
 
