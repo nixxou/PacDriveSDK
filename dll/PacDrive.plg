@@ -1,0 +1,52 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PacDrive - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Headsoft\LOCALS~1\Temp\RSP2CE9.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACDRIVE_EXPORTS" /FR"Release/" /Fp"Release/PacDrive.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Documents and Settings\Headsoft\My Documents\Visual Studio Projects\PacDriveSDK\dll\PacDrive.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Headsoft\LOCALS~1\Temp\RSP2CE9.tmp" 
+Creating temporary file "C:\DOCUME~1\Headsoft\LOCALS~1\Temp\RSP2CEA.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACDRIVE_EXPORTS" /FR"Release/" /Fp"Release/PacDrive.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Documents and Settings\Headsoft\My Documents\Visual Studio Projects\PacDriveSDK\dll\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Headsoft\LOCALS~1\Temp\RSP2CEA.tmp" 
+Creating temporary file "C:\DOCUME~1\Headsoft\LOCALS~1\Temp\RSP2CEB.tmp" with contents
+[
+kernel32.lib user32.lib uuid.lib odbc32.lib odbccp32.lib setupapi.lib hid.lib /nologo /dll /incremental:no /pdb:"Release/PacDrive.pdb" /machine:I386 /def:".\PacDrive.def" /out:"Release/PacDrive.dll" /implib:"Release/PacDrive.lib" 
+".\Release\PacDrive.obj"
+".\Release\StdAfx.obj"
+".\HID.LIB"
+".\SETUPAPI.LIB"
+]
+Creating command line "link.exe @C:\DOCUME~1\Headsoft\LOCALS~1\Temp\RSP2CEB.tmp"
+<h3>Output Window</h3>
+Compiling...
+StdAfx.cpp
+C:\WINDDK\6001.18002\INC\API\winnt.h(3607) : warning C4035: 'ReadPMC' : no return value
+C:\WINDDK\6001.18002\INC\API\winnt.h(3637) : warning C4035: 'ReadTimeStampCounter' : no return value
+C:\WINDDK\6001.18002\INC\API\wingdi.h(4340) : warning C4068: unknown pragma
+C:\WINDDK\6001.18002\INC\API\wingdi.h(4341) : warning C4068: unknown pragma
+Compiling...
+PacDrive.cpp
+C:\Documents and Settings\Headsoft\My Documents\Visual Studio Projects\PacDriveSDK\dll\PacDrive.cpp(933) : warning C4101: 'buf' : unreferenced local variable
+Linking...
+   Creating library Release/PacDrive.lib and object Release/PacDrive.exp
+Creating command line "bscmake.exe /nologo /o"Release/PacDrive.bsc"  ".\Release\StdAfx.sbr" ".\Release\PacDrive.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+PacDrive.dll - 0 error(s), 5 warning(s)
+</pre>
+</body>
+</html>

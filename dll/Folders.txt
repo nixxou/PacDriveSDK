@@ -1,0 +1,12 @@
+1. Control Panel -> Uninstall Programs.
+2. Select Visual Studio and click Uninstall/Change.
+3. Wait. Wait some more. Click Next.
+4. Choose Add or Remove Features.
+5. Expand MSVC 2008 -> Language Tools -> Visual C++.
+6. Select X64 Compilers and Tools.
+
+Include Folders
+C:\WinDDK\6001.18002\inc\api
+Library Files
+x64		C:\WinDDK\6001.18002\lib\wlh\amd64
+x86		C:\WinDDK\6001.18002\lib\wlh\i386
