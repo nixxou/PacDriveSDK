@@ -55,7 +55,7 @@ It contains source code projects for the following languages:
 | --- | --- | --- | --- | --- |
 | 0 | Unknown | | | |
 | 1 | PacDrive | 16 | | |
-| 2 | U-HID | 16 |  |
+| 2 | U-HID | 16 | | |
 | 3 | Blue-HID | 16 | | |
 | 4 | Nano-LED | 60 | 256 | 20 |
 | 5 | PacLED64 | 64 | 256 | 21 |
