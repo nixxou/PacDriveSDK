@@ -13,6 +13,13 @@ extern "C" {
 #include <stdio.h>
 #include <wtypes.h>
 
+bool pipeConnectedSindenGunA = false;
+bool pipeConnectedSindenGunB = false;
+HANDLE hPipeSindenGunA = nullptr;
+HANDLE hPipeSindenGunB = nullptr;
+
+const char output_signal[3] = "1\n";
+
 UINT32 m_id = 0;
 HINSTANCE m_hInstance = NULL;
 HANDLE m_hThread = NULL;
@@ -177,6 +184,20 @@ PACDRIVE_API INT __stdcall PacInitialize()
 	ULONG bytesReturned;
 	DWORD dwThrdParam = 1;
 
+	if (hPipeSindenGunA != nullptr)
+	{
+		CloseHandle(hPipeSindenGunA);
+	}
+
+	if (hPipeSindenGunB != nullptr)
+	{
+		CloseHandle(hPipeSindenGunB);
+	}
+	pipeConnectedSindenGunA = false;
+	pipeConnectedSindenGunB = false;
+	return 1;
+
+
 	PacShutdown();
 
 	m_deviceCount = 0;
@@ -233,6 +254,20 @@ PACDRIVE_API INT __stdcall PacInitialize()
 
 PACDRIVE_API VOID __stdcall PacShutdown()
 {
+
+	if (hPipeSindenGunA != nullptr)
+	{
+		CloseHandle(hPipeSindenGunA);
+	}
+
+	if (hPipeSindenGunB != nullptr)
+	{
+		CloseHandle(hPipeSindenGunB);
+	}
+	pipeConnectedSindenGunA = false;
+	pipeConnectedSindenGunB = false;
+	return;
+
 	for(INT i = 0; i < m_deviceCount; i++)
 	{
 		DEBUGLOG(L"Closing HID Handle: %08x\n", m_hidDeviceData[i].hDevice);
@@ -282,6 +317,8 @@ PACDRIVE_API VOID __stdcall PacShutdown()
 
 PACDRIVE_API BOOL __stdcall PacSetLEDStates(INT id, USHORT data)
 {
+	return true;
+
 	if (!IS_TYPE_PACDRIVE(m_hidDeviceData[id].Type))
 		return FALSE;
 
@@ -304,6 +341,68 @@ PACDRIVE_API BOOL __stdcall PacSetLEDStates(INT id, USHORT data)
 
 PACDRIVE_API BOOL __stdcall PacSetLEDState(INT id, INT port, BOOL state)
 {
+	const char* nomFichier = "test.txt";
+	/*
+	FILE* fichier = fopen(nomFichier, "w");
+	if (fichier != NULL) {
+		fprintf(fichier, "%s : %d %d %d\n", "PacSetLEDState Final", id, port, (int)state);
+		fclose(fichier);
+	}
+	*/
+	if ((int)state == -1) 
+	{
+		if (port == 0)
+		{
+			if (!pipeConnectedSindenGunA)
+			{
+				if (hPipeSindenGunA != nullptr)
+				{
+					CloseHandle(hPipeSindenGunA);
+				}
+				hPipeSindenGunA = CreateFileA("\\\\.\\pipe\\RecoilSindenGunA", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+				if (hPipeSindenGunA != INVALID_HANDLE_VALUE)
+				{
+					pipeConnectedSindenGunA = true;
+				}
+			}
+			if (pipeConnectedSindenGunA)
+			{
+				DWORD bytesWritten;
+				if (!WriteFile(hPipeSindenGunA, output_signal, strlen(output_signal), &bytesWritten, NULL))
+				{
+					CloseHandle(hPipeSindenGunA);
+					pipeConnectedSindenGunA = false;
+				}
+			}
+		}
+		if (port == 1)
+		{
+			if (!pipeConnectedSindenGunB)
+			{
+				if (hPipeSindenGunB != nullptr)
+				{
+					CloseHandle(hPipeSindenGunB);
+				}
+				hPipeSindenGunB = CreateFileA("\\\\.\\pipe\\RecoilSindenGunB", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+				if (hPipeSindenGunB != INVALID_HANDLE_VALUE)
+				{
+					pipeConnectedSindenGunB = true;
+				}
+			}
+			if (pipeConnectedSindenGunB)
+			{
+				DWORD bytesWritten;
+				if (!WriteFile(hPipeSindenGunB, output_signal, strlen(output_signal), &bytesWritten, NULL))
+				{
+					CloseHandle(hPipeSindenGunB);
+					pipeConnectedSindenGunB = false;
+				}
+			}
+		}
+
+	}
+
+	return true;
 	if (!IS_TYPE_PACDRIVE(m_hidDeviceData[id].Type))
 		return FALSE;
 
@@ -329,6 +428,8 @@ PACDRIVE_API BOOL __stdcall PacSetLEDState(INT id, INT port, BOOL state)
 
 PACDRIVE_API BOOL __stdcall Pac64SetLEDStates(INT id, INT group, BYTE data)
 {
+	return true;
+
 	if (!IS_TYPE_PAC64(m_hidDeviceData[id].Type))
 		return FALSE;
 
@@ -631,6 +732,8 @@ PACDRIVE_API BOOL __stdcall Pac64UpdateFirmware(INT id)
 
 PACDRIVE_API INT __stdcall PacGetDeviceType(INT id)
 {
+	return 1;
+
 	return m_hidDeviceData[id].Type;
 }
 
@@ -689,6 +792,7 @@ PACDRIVE_API VOID __stdcall PacGetDevicePath(INT id, PWCHAR sDevicePath)
 
 PACDRIVE_API BOOL __stdcall PacProgramUHid(INT id, PWCHAR sFilePath)
 {
+	return true;
 	if(m_hidDeviceData[id].Type != DEVICETYPE_UHID)
 		return FALSE;
 
